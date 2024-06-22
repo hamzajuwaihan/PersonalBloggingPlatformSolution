@@ -1,0 +1,6 @@
+@PersonalBloggingPlatform.Web_HostAddress = http://localhost:5236
+
+GET {{PersonalBloggingPlatform.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
