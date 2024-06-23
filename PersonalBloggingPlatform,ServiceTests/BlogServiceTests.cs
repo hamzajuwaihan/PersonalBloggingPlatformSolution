@@ -27,6 +27,7 @@ namespace PersonalBloggingPlatform.ServiceTests
             _blogAddService = new AddBlogService(_blogRepository);
         }
 
+        #region AddBlogTests
         //When adding a blog 
         [Fact]
         public async Task AddBlog_NullBlog_ToBeNullReferenceException()
@@ -96,6 +97,6 @@ namespace PersonalBloggingPlatform.ServiceTests
 
 
         }
-
+        #endregion
     }
 }

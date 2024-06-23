@@ -14,7 +14,29 @@ namespace PersonalBloggingPlatform.Core.DTO
         public string BlogBody { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        
+        public override bool Equals(object? obj)
+        {
+
+            if(obj == null)
+            {
+                return false;
+            }
+
+            if (obj.GetType() != typeof(AddBlogResponse)) return false;
+
+            AddBlogResponse blogToCompare = (AddBlogResponse)obj;
+
+
+            return this.Id == blogToCompare.Id &&
+                this.BlogTitle == blogToCompare.BlogTitle &&
+                this.BlogBody == blogToCompare.BlogBody &&
+                this.CreatedAt == blogToCompare.CreatedAt;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
     public static class AddBlogResponseExtensions

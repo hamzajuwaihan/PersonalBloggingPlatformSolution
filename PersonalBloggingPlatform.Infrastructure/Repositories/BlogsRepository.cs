@@ -1,5 +1,6 @@
 ﻿using PersonalBloggingPlatform.Core.Domain.Entities;
 using PersonalBloggingPlatform.Core.Domain.RepositoryContracts;
+using PersonalBloggingPlatform.Infrastructure.AppDbContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,20 @@ namespace PersonalBloggingPlatform.Infrastructure.Repositories
 {
     public class BlogsRepository : IBlogRepository
     {
-        public Task<Blog> AddBlog(Blog blog)
+        private readonly ApplicationDbContext _context;
+
+        public BlogsRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<Blog> AddBlog(Blog blog)
+        {
+            await _context.Blogs.AddAsync(blog);
+
+            await _context.SaveChangesAsync();
+
+            return blog;
         }
     }
 }

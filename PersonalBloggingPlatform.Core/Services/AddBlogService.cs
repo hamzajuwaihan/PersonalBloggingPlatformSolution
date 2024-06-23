@@ -1,4 +1,5 @@
-﻿using PersonalBloggingPlatform.Core.Domain.RepositoryContracts;
+﻿using PersonalBloggingPlatform.Core.Domain.Entities;
+using PersonalBloggingPlatform.Core.Domain.RepositoryContracts;
 using PersonalBloggingPlatform.Core.DTO;
 using PersonalBloggingPlatform.Core.ServiceContracts;
 using System;
@@ -18,10 +19,29 @@ namespace PersonalBloggingPlatform.Core.Services
             _blogRepository = blogRepository;
         }
 
-        public Task<AddBlogResponse> AddBlog(AddBlogRequest? request)
+        public async Task<AddBlogResponse> AddBlog(AddBlogRequest? request)
         {
+            if(request == null)
+            {
+                throw new NullReferenceException();
+            }
 
-            throw new NotImplementedException();
+            if(string.IsNullOrEmpty(request.BlogTitle) || string.IsNullOrEmpty(request.BlogBody))
+            {
+                throw new ArgumentException();
+            }
+
+         
+
+            Blog newBlog = request.ToBlog();
+
+            newBlog.Id = Guid.NewGuid();
+            newBlog.CreatedAt = DateTime.Now;
+
+            Blog response = await _blogRepository.AddBlog(newBlog);
+
+            return response.ToAddBlogResponse() ;
+
         }
     }
 }

@@ -14,6 +14,6 @@ namespace PersonalBloggingPlatform.Core.Domain.RepositoryContracts
         /// </summary>
         /// <param name="blog">Blog object to add.</param>
         /// <returns>Returns the blog object after addding it to the database blogs table.</returns>
-        Task<Blog> AddBlog(Blog blog);
+        public Task<Blog> AddBlog(Blog blog);
     }
 }
