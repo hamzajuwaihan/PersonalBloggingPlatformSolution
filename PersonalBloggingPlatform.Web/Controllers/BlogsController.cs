@@ -15,9 +15,13 @@ namespace PersonalBloggingPlatform.Web.Controllers
         {
             _blogAddService = blogAddService;
         }
-
+        /// <summary>
+        /// Adds a blog to the database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>Newly added blog object</returns>
         [HttpPost]
-        public async Task<IActionResult> AddBlog(AddBlogRequest request)
+        public async Task<IActionResult> AddBlog([FromBody] AddBlogRequest request)
         {
             try
             {

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PersonalBloggingPlatform.Web</name>
+    </assembly>
+    <members>
+        <member name="M:PersonalBloggingPlatform.Web.Controllers.BlogsController.AddBlog(PersonalBloggingPlatform.Core.DTO.AddBlogRequest)">
+            <summary>
+            Adds a blog to the database.
+            </summary>
+            <param name="request"></param>
+            <returns>Newly added blog object</returns>
+        </member>
+    </members>
+</doc>
