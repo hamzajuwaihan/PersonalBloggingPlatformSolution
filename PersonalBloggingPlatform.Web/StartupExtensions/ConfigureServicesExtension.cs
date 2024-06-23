@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PersonalBloggingPlatform.Core.Domain.RepositoryContracts;
 using PersonalBloggingPlatform.Core.ServiceContracts;
 using PersonalBloggingPlatform.Core.Services;
@@ -11,12 +12,24 @@ namespace PersonalBloggingPlatform.Web.StartupExtensions
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new ProducesAttribute("application/json"));
+                options.Filters.Add(new ConsumesAttribute("application/json"));
+            });
             services.AddScoped<IBlogRepository, BlogsRepository>();
             services.AddScoped<IBlogAddService, AddBlogService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddEndpointsApiExplorer();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "api.xml"));
             });
 
 
