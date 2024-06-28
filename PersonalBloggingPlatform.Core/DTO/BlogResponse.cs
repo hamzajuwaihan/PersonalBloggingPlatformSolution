@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBloggingPlatform.Core.DTO
 {
-    public class AddBlogResponse
+    public class BlogResponse
     {
         public Guid Id { get; set; }
         public string BlogTitle { get; set; }
@@ -22,9 +22,9 @@ namespace PersonalBloggingPlatform.Core.DTO
                 return false;
             }
 
-            if (obj.GetType() != typeof(AddBlogResponse)) return false;
+            if (obj.GetType() != typeof(BlogResponse)) return false;
 
-            AddBlogResponse blogToCompare = (AddBlogResponse)obj;
+            BlogResponse blogToCompare = (BlogResponse)obj;
 
 
             return this.Id == blogToCompare.Id &&
@@ -41,9 +41,19 @@ namespace PersonalBloggingPlatform.Core.DTO
 
     public static class AddBlogResponseExtensions
     {
-        public static AddBlogResponse ToAddBlogResponse(this Blog blog)
+        public static BlogResponse ToAddBlogResponse(this Blog blog)
         {
-            return new AddBlogResponse
+            return new BlogResponse
+            {
+                Id = blog.Id,
+                BlogTitle = blog.BlogTitle,
+                BlogBody = blog.BlogBody,
+                CreatedAt = blog.CreatedAt
+            };
+        }
+        public static BlogResponse ToBlogResponse(this Blog blog)
+        {
+            return new BlogResponse
             {
                 Id = blog.Id,
                 BlogTitle = blog.BlogTitle,
@@ -52,6 +62,8 @@ namespace PersonalBloggingPlatform.Core.DTO
             };
         }
     }
+
+    
 
      
 }

@@ -19,7 +19,7 @@ namespace PersonalBloggingPlatform.Core.Services
             _blogRepository = blogRepository;
         }
 
-        public async Task<AddBlogResponse> AddBlog(AddBlogRequest? request)
+        public async Task<BlogResponse> AddBlog(AddBlogRequest? request)
         {
             if(request == null)
             {

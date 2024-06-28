@@ -10,10 +10,12 @@ namespace PersonalBloggingPlatform.Web.Controllers
     public class BlogsController : ControllerBase
     {
         private readonly IBlogAddService _blogAddService;
+        private readonly IBlogGetService _blogGetService;
 
-        public BlogsController(IBlogAddService blogAddService)
+        public BlogsController(IBlogAddService blogAddService, IBlogGetService blogGetService)
         {
             _blogAddService = blogAddService;
+            _blogGetService = blogGetService;
         }
         /// <summary>
         /// Adds a blog to the database.
@@ -32,6 +34,42 @@ namespace PersonalBloggingPlatform.Web.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Get all blogs from DB.
+        /// </summary>
+        /// <returns>List of Blogs</returns>
+        [HttpGet]
+        public async Task<ActionResult<List<BlogResponse>>> GetAllBlogs()
+        {
+            var result = await _blogGetService.GetAllBlogs();
+
+            if(result.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Search for Blog based on ID.
+        /// </summary>
+        /// <param name="id">Blog Id</param>
+        /// <returns>Blog or not found</returns>
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BlogResponse>> GetBlogById(Guid id)
+        {
+            var result = await _blogGetService.GetBlogById(id);
+
+            if(result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
     }
 }

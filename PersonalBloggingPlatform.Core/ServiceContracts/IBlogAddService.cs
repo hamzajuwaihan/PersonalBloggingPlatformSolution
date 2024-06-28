@@ -14,6 +14,6 @@ namespace PersonalBloggingPlatform.Core.ServiceContracts
         /// </summary>
         /// <param name="request"> blog to Add</param>
         /// <returns>Returns the same blog details, along with new generated Blog Guid.</returns>
-        Task<AddBlogResponse> AddBlog(AddBlogRequest? request);
+        Task<BlogResponse> AddBlog(AddBlogRequest? request);
     }
 }

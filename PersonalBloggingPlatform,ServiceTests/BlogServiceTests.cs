@@ -14,8 +14,7 @@ namespace PersonalBloggingPlatform.ServiceTests
         private readonly IBlogAddService _blogAddService;
         private readonly IBlogRepository _blogRepository;
         private readonly Mock<IBlogRepository> _blogRepositoryMock;
-
-
+        private readonly IBlogGetService _blogGetService;
         private readonly IFixture _fixture;
 
 
@@ -25,6 +24,7 @@ namespace PersonalBloggingPlatform.ServiceTests
             _blogRepositoryMock = new Mock<IBlogRepository>();
             _blogRepository = _blogRepositoryMock.Object;
             _blogAddService = new AddBlogService(_blogRepository);
+            _blogGetService = new GetBlogService(_blogRepository);
         }
 
         #region AddBlogTests
@@ -50,12 +50,12 @@ namespace PersonalBloggingPlatform.ServiceTests
             var request = _fixture.Create<AddBlogRequest>();
             Blog blog = request.ToBlog();
 
-            AddBlogResponse blogResponseExpected = blog.ToAddBlogResponse();
+            BlogResponse blogResponseExpected = blog.ToAddBlogResponse();
 
             _blogRepositoryMock.Setup(temp => temp.AddBlog(It.IsAny<Blog>())).ReturnsAsync(blog);
 
             //Act
-            AddBlogResponse result = await _blogAddService.AddBlog(request);
+            BlogResponse result = await _blogAddService.AddBlog(request);
 
             blogResponseExpected.Id = result.Id;
 
@@ -98,5 +98,96 @@ namespace PersonalBloggingPlatform.ServiceTests
 
         }
         #endregion
+
+
+        #region GetBlogTests
+
+        [Fact]
+        public async Task GetBlog_NullId()
+        {
+
+            //Arrange
+            Guid id = Guid.Empty;
+
+            //Act
+            Func<Task> action = async () => await _blogGetService.GetBlogById(id);
+
+            //Assert
+            await action.Should().ThrowAsync<ArgumentNullException>(); // Expecting ArgumentException
+        }
+
+        [Fact]
+        public async Task GetBlog_ValidId()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            Blog blog = _fixture.Build<Blog>().With(b => b.Id, id).Create(); // Ensure the blog has the expected ID
+
+            _blogRepositoryMock.Setup(temp => temp.GetBlogById(id)).ReturnsAsync(blog); // Setup to return the blog with the specific ID
+
+            // Act
+            BlogResponse result = await _blogGetService.GetBlogById(id);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(id);
+        }
+
+
+        [Fact]
+        public async Task GetBlog_InvalidId()
+        {
+            // Arrange
+            Guid invalidId = Guid.NewGuid();
+
+            // Setup the repository mock to return null when GetBlogById is called with the invalid ID
+            _blogRepositoryMock.Setup(temp => temp.GetBlogById(invalidId)).ReturnsAsync((Blog?)null);
+
+            // Act
+            BlogResponse? result = await _blogGetService.GetBlogById(invalidId);
+
+            // Assert
+            result.Should().BeNull();
+        }
+
+
+        [Fact]
+        public async Task GetBlog_GetAllBlogsPopulatedList()
+        {
+
+            //Arrange
+            List<Blog> blogs = _fixture.CreateMany<Blog>().ToList();
+
+            _blogRepositoryMock.Setup(temp => temp.GetAllBlogs()).ReturnsAsync(blogs);
+
+            //Act
+            List<BlogResponse> result = await _blogGetService.GetAllBlogs();
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(blogs.Count);
+        }
+
+        [Fact]
+        public async Task GetBlog_GetAllBlogs_EmptyList()
+        {
+
+            //Arrange
+            List<Blog> blogs = new List<Blog>();
+
+            _blogRepositoryMock.Setup(temp => temp.GetAllBlogs()).ReturnsAsync(blogs);
+
+            //Act
+            List<BlogResponse> result = await _blogGetService.GetAllBlogs();
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(0);
+        }
+
+        #endregion
     }
+
+
+
 }

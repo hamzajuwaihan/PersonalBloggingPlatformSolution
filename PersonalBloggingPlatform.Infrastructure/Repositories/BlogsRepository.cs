@@ -1,4 +1,5 @@
-﻿using PersonalBloggingPlatform.Core.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PersonalBloggingPlatform.Core.Domain.Entities;
 using PersonalBloggingPlatform.Core.Domain.RepositoryContracts;
 using PersonalBloggingPlatform.Infrastructure.AppDbContext;
 using System;
@@ -25,6 +26,18 @@ namespace PersonalBloggingPlatform.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return blog;
+        }
+
+        public async Task<List<Blog>> GetAllBlogs()
+        {
+            return await _context.Blogs.ToListAsync();
+
+
+        }
+
+        public async Task<Blog?> GetBlogById(Guid id)
+        {
+            return await _context.Blogs.FirstOrDefaultAsync(blog => blog.Id == id);
         }
     }
 }

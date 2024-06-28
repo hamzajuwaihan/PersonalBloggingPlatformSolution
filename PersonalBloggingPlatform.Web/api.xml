@@ -11,5 +11,18 @@
             <param name="request"></param>
             <returns>Newly added blog object</returns>
         </member>
+        <member name="M:PersonalBloggingPlatform.Web.Controllers.BlogsController.GetAllBlogs">
+            <summary>
+            Get all blogs from DB.
+            </summary>
+            <returns>List of Blogs</returns>
+        </member>
+        <member name="M:PersonalBloggingPlatform.Web.Controllers.BlogsController.GetBlogById(System.Guid)">
+            <summary>
+            Search for Blog based on ID.
+            </summary>
+            <param name="id">Blog Id</param>
+            <returns>Blog or not found</returns>
+        </member>
     </members>
 </doc>

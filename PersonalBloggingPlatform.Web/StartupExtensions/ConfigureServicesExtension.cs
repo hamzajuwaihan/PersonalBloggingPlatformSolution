@@ -19,6 +19,7 @@ namespace PersonalBloggingPlatform.Web.StartupExtensions
             });
             services.AddScoped<IBlogRepository, BlogsRepository>();
             services.AddScoped<IBlogAddService, AddBlogService>();
+            services.AddScoped<IBlogGetService, GetBlogService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
