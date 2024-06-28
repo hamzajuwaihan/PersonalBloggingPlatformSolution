@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalBloggingPlatform.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalBloggingPlatform.Infrastructure", "PersonalBloggingPlatform.Infrastructure\PersonalBloggingPlatform.Infrastructure.csproj", "{5A96B5EA-0BE8-4F83-8A13-E2F278928BD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBloggingPlatform.ServiceTests", "PersonalBloggingPlatform,ServiceTests\PersonalBloggingPlatform.ServiceTests.csproj", "{5A9E7A9B-4D82-4AA8-B351-4BFF860A9F24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersonalBloggingPlatform.ServiceTests", "PersonalBloggingPlatform,ServiceTests\PersonalBloggingPlatform.ServiceTests.csproj", "{5A9E7A9B-4D82-4AA8-B351-4BFF860A9F24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBloggingPlatform.ControllerTests", "PersonalBloggingPlatform.ControllerTests\PersonalBloggingPlatform.ControllerTests.csproj", "{9AD56E12-2A5C-4159-A6C0-A19A9FA841C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{5A9E7A9B-4D82-4AA8-B351-4BFF860A9F24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A9E7A9B-4D82-4AA8-B351-4BFF860A9F24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A9E7A9B-4D82-4AA8-B351-4BFF860A9F24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD56E12-2A5C-4159-A6C0-A19A9FA841C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD56E12-2A5C-4159-A6C0-A19A9FA841C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD56E12-2A5C-4159-A6C0-A19A9FA841C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD56E12-2A5C-4159-A6C0-A19A9FA841C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{BCABA0E9-CC19-4266-8B12-80C8B8784D33} = {CB80E5B8-6440-4771-BAE5-FE5E594C7D28}
 		{5A96B5EA-0BE8-4F83-8A13-E2F278928BD7} = {CB80E5B8-6440-4771-BAE5-FE5E594C7D28}
 		{5A9E7A9B-4D82-4AA8-B351-4BFF860A9F24} = {37407F48-0BAB-487E-BD79-C42E27F21AE7}
+		{9AD56E12-2A5C-4159-A6C0-A19A9FA841C7} = {37407F48-0BAB-487E-BD79-C42E27F21AE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {532BE126-5C98-41A2-971E-B57C3E8D13EE}

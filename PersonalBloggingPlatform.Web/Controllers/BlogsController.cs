@@ -62,6 +62,10 @@ namespace PersonalBloggingPlatform.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogResponse>> GetBlogById(Guid id)
         {
+            if(id == Guid.Empty)
+            {
+                return BadRequest();
+            }
             var result = await _blogGetService.GetBlogById(id);
 
             if(result == null)
