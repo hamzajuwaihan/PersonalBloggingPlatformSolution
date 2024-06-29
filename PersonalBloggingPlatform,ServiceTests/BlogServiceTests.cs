@@ -17,6 +17,7 @@ namespace PersonalBloggingPlatform.ServiceTests
         private readonly IBlogGetService _blogGetService;
         private readonly IFixture _fixture;
         private readonly IDeleteBlogService _deleteBlogService;
+        private readonly IUpdateBlogService _updateBlogService;
 
         public BlogServiceTests()
         {
@@ -26,6 +27,7 @@ namespace PersonalBloggingPlatform.ServiceTests
             _blogAddService = new AddBlogService(_blogRepository);
             _blogGetService = new GetBlogService(_blogRepository);
             _deleteBlogService = new DeleteBlogService(_blogRepository);
+            _updateBlogService = new UpdateBlogService(_blogRepository);
 
         }
 
@@ -233,6 +235,57 @@ namespace PersonalBloggingPlatform.ServiceTests
             // Assert
             result.Should().BeFalse();
         }
+        #endregion
+
+        #region UpdateBlogTests
+        [Fact]
+        public async Task UpdateBlog_NullId()
+        {
+            //Arrange
+            UpdateBlogRequest blog = _fixture.Create<UpdateBlogRequest>();
+
+            //Act
+            Func<Task> action = async () => await _updateBlogService.UpdateBlogById(blog);
+
+            //Assert
+            await action.Should().ThrowAsync<ArgumentNullException>(); // Expecting ArgumentNullException
+        }
+
+        [Fact]
+        public async Task UpdateBlog_NullBlogRequest()
+        {
+            //Arrange
+           
+            UpdateBlogRequest blog = null;
+
+            //Act
+            Func<Task> action = async () => await _updateBlogService.UpdateBlogById(blog);
+
+            //Assert
+            await action.Should().ThrowAsync<ArgumentNullException>(); // Expecting ArgumentNullException
+        }
+
+        [Fact]
+        public async Task UpdateBlog_ValidBlog()
+        {
+            // Arrange
+            
+            UpdateBlogRequest updateBlogRequest = _fixture.Create<UpdateBlogRequest>();
+            Blog blog = updateBlogRequest.ToBlog();
+
+            
+            
+            _blogRepositoryMock.Setup(temp => temp.UpdateBlogById(It.IsAny<Blog>())).ReturnsAsync(blog);
+
+            // Act
+            var result = await _updateBlogService.UpdateBlogById(updateBlogRequest);
+
+            
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(blog.Id);
+        }
+
         #endregion
     }
 

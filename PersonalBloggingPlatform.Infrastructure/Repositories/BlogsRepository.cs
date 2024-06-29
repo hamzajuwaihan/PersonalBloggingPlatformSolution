@@ -50,5 +50,25 @@ namespace PersonalBloggingPlatform.Infrastructure.Repositories
         {
             return await _context.Blogs.FirstOrDefaultAsync(blog => blog.Id == id);
         }
+
+        public async Task<Blog?> UpdateBlogById(Blog blog)
+        {
+
+            var blogToUpdate = await _context.Blogs.FirstOrDefaultAsync(b => b.Id == blog.Id);
+
+            if (blogToUpdate != null)
+            {
+                blogToUpdate.BlogTitle = blog.BlogTitle;
+                blogToUpdate.BlogBody = blog.BlogBody;
+
+                _context.Blogs.Update(blogToUpdate);
+
+                await _context.SaveChangesAsync();
+                return blogToUpdate;
+            }
+
+            return null;
+        }
+
     }
 }
