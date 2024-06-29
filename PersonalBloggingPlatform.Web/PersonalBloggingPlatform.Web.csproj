@@ -23,4 +23,7 @@
     <ProjectReference Include="..\PersonalBloggingPlatform.Infrastructure\PersonalBloggingPlatform.Infrastructure.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="PersonalBloggingPlatform.IntegrationTest"/>
+	</ItemGroup>
 </Project>

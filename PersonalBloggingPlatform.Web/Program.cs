@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.ConfigureServices(builder.Configuration);
+builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
@@ -12,12 +12,17 @@ var app = builder.Build();
 
 app.UseAuthorization();
 
-//create endpoints for swagger.json
-app.UseSwagger();
+if (!app.Environment.IsEnvironment("Test"))
+{
+    // Create endpoints for swagger.json
+    app.UseSwagger();
 
-//create swagger UI for testing all web API endpoints/action methods
-app.UseSwaggerUI();
+    // Create swagger UI for testing all web API endpoints/action methods
+    app.UseSwaggerUI();
+}
 
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
