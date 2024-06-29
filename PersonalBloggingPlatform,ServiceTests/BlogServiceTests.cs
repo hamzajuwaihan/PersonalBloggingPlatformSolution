@@ -16,7 +16,7 @@ namespace PersonalBloggingPlatform.ServiceTests
         private readonly Mock<IBlogRepository> _blogRepositoryMock;
         private readonly IBlogGetService _blogGetService;
         private readonly IFixture _fixture;
-
+        private readonly IDeleteBlogService _deleteBlogService;
 
         public BlogServiceTests()
         {
@@ -25,6 +25,8 @@ namespace PersonalBloggingPlatform.ServiceTests
             _blogRepository = _blogRepositoryMock.Object;
             _blogAddService = new AddBlogService(_blogRepository);
             _blogGetService = new GetBlogService(_blogRepository);
+            _deleteBlogService = new DeleteBlogService(_blogRepository);
+
         }
 
         #region AddBlogTests
@@ -185,6 +187,52 @@ namespace PersonalBloggingPlatform.ServiceTests
             result.Should().HaveCount(0);
         }
 
+        #endregion
+
+        #region DeleteBlogTests
+
+        [Fact]
+        public async Task DeleteBlog_NullId()
+        {
+            //Arrange
+            Guid id = Guid.Empty;
+
+            //Act
+            Func<Task> action = async () => await _deleteBlogService.DeleteBlog(id);
+
+            //Assert
+            await action.Should().ThrowAsync<ArgumentNullException>(); // Expecting ArgumentNullException
+        }
+
+        [Fact]
+        public async Task DeleteBlog_ValidId()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+
+            _blogRepositoryMock.Setup(temp => temp.DeleteBlog(id)).ReturnsAsync(true);
+
+            // Act
+            bool result = await _deleteBlogService.DeleteBlog(id);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task DeleteBlog_InvalidId()
+        {
+            // Arrange
+            Guid invalidId = Guid.NewGuid();
+
+            _blogRepositoryMock.Setup(temp => temp.DeleteBlog(invalidId)).ReturnsAsync(false);
+
+            // Act
+            bool result = await _deleteBlogService.DeleteBlog(invalidId);
+
+            // Assert
+            result.Should().BeFalse();
+        }
         #endregion
     }
 

@@ -28,6 +28,17 @@ namespace PersonalBloggingPlatform.Infrastructure.Repositories
             return blog;
         }
 
+        public async Task<bool> DeleteBlog(Guid? blogID)
+        {
+            var result = await _context.Blogs.FirstOrDefaultAsync(blog => blog.Id == blogID);
+            if (result != null) {
+                _context.Blogs.Remove(result);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
         public async Task<List<Blog>> GetAllBlogs()
         {
             return await _context.Blogs.ToListAsync();

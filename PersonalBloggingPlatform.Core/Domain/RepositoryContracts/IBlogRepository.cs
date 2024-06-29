@@ -28,5 +28,7 @@ namespace PersonalBloggingPlatform.Core.Domain.RepositoryContracts
         /// </summary>
         /// <returns>List of the blogs</returns>
         public Task<List<Blog>> GetAllBlogs();
+
+        public Task<bool> DeleteBlog(Guid? blogID);
     }
 }
