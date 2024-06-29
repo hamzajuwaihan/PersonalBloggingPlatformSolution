@@ -10,7 +10,7 @@ namespace PersonalBloggingPlatform.Web.StartupExtensions
 {
     public static class ConfigureServicesExtension
     {
-        public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             services.AddControllers(options =>
             {
@@ -28,10 +28,15 @@ namespace PersonalBloggingPlatform.Web.StartupExtensions
 
             services.AddEndpointsApiExplorer();
 
-            services.AddSwaggerGen(options =>
+            if(!environment.IsEnvironment("Test"))
             {
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "api.xml"));
-            });
+                services.AddSwaggerGen(options =>
+                {
+                    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "api.xml"));
+                });
+
+            }
+           
 
 
             return services;
