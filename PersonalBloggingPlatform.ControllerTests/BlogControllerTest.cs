@@ -13,8 +13,14 @@ namespace PersonalBloggingPlatform.ControllerTests
     {
         private readonly IBlogAddService _blogAddService;
         private readonly IBlogGetService _blogGetService;
+        private readonly IBlogUpdateService _blogUpdateService;
+        private readonly IBlogDeleteService _blogDeleteService;
+
         private readonly Mock<IBlogAddService> _blogAddServiceMock;
         private readonly Mock<IBlogGetService> _blogGetServiceMock;
+        private readonly Mock<IBlogUpdateService> _blogUpdateServiceMock;
+        private readonly Mock<IBlogDeleteService> _blogDeleteServiceMock;
+
         private readonly IFixture _fixture;
 
         public BlogControllerTest()
@@ -22,8 +28,12 @@ namespace PersonalBloggingPlatform.ControllerTests
             _fixture = new Fixture();
             _blogAddServiceMock = new Mock<IBlogAddService>();
             _blogGetServiceMock = new Mock<IBlogGetService>();
+            _blogUpdateServiceMock = new Mock<IBlogUpdateService>();
+            _blogDeleteServiceMock = new Mock<IBlogDeleteService>();
             _blogAddService = _blogAddServiceMock.Object;
             _blogGetService = _blogGetServiceMock.Object;
+            _blogUpdateService = _blogUpdateServiceMock.Object;
+            _blogDeleteService = _blogDeleteServiceMock.Object;
             
         }
 
@@ -38,7 +48,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogAddServiceMock.Setup(temp => temp.AddBlog(It.IsAny<AddBlogRequest>())).ReturnsAsync(response);
 
-            var controller = new BlogsController(_blogAddService, _blogGetService);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.AddBlog(request);
@@ -59,7 +69,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogAddServiceMock.Setup(temp => temp.AddBlog(It.IsAny<AddBlogRequest>())).ThrowsAsync(new NullReferenceException());
 
-            var controller = new BlogsController(_blogAddService, _blogGetService);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.AddBlog(request);
@@ -79,7 +89,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogAddServiceMock.Setup(temp => temp.AddBlog(It.IsAny<AddBlogRequest>())).ThrowsAsync(new ArgumentException());
 
-            var controller = new BlogsController(_blogAddService, _blogGetService);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.AddBlog(request);
@@ -99,7 +109,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogAddServiceMock.Setup(temp => temp.AddBlog(It.IsAny<AddBlogRequest>())).ThrowsAsync(new ArgumentException());
 
-            var controller = new BlogsController(_blogAddService, _blogGetService);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.AddBlog(request);
@@ -123,7 +133,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogGetServiceMock.Setup(temp => temp.GetAllBlogs()).ReturnsAsync(blogResponses);
 
-            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.GetAllBlogs();
@@ -146,7 +156,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogGetServiceMock.Setup(temp => temp.GetAllBlogs()).ReturnsAsync(blogResponses);
 
-            var controller = new BlogsController(_blogAddService, _blogGetService);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.GetAllBlogs();
@@ -166,7 +176,7 @@ namespace PersonalBloggingPlatform.ControllerTests
         {
             //Arrange
             Guid id = Guid.Empty;
-            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
             var result = await controller.GetBlogById(id);
@@ -189,7 +199,7 @@ namespace PersonalBloggingPlatform.ControllerTests
 
             _blogGetServiceMock.Setup(temp => temp.GetBlogById(id)).ReturnsAsync(blogResponse);
 
-            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object);
+            var controller = new BlogsController(_blogAddServiceMock.Object, _blogGetServiceMock.Object, _blogDeleteServiceMock.Object, _blogUpdateServiceMock.Object);
 
             //Act
 

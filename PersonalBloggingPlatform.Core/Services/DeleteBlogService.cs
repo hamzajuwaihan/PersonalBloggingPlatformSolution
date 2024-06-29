@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBloggingPlatform.Core.Services
 {
-    public class DeleteBlogService : IDeleteBlogService
+    public class DeleteBlogService : IBlogDeleteService
     {
         private readonly IBlogRepository _blogRepository;
 

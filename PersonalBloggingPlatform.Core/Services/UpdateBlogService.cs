@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBloggingPlatform.Core.Services
 {
-    public class UpdateBlogService : IUpdateBlogService
+    public class UpdateBlogService : IBlogUpdateService
     {
         private readonly IBlogRepository _blogRepoistory;
 
@@ -21,7 +21,7 @@ namespace PersonalBloggingPlatform.Core.Services
 
         public async Task<BlogResponse?> UpdateBlogById(UpdateBlogRequest? updateBlogRequest)
         {
-            if(updateBlogRequest.Id == Guid.Empty || updateBlogRequest == null)
+            if(updateBlogRequest?.Id == Guid.Empty || updateBlogRequest == null)
             {
                 throw new ArgumentNullException();
             }

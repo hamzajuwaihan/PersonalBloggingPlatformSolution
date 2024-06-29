@@ -16,8 +16,8 @@ namespace PersonalBloggingPlatform.ServiceTests
         private readonly Mock<IBlogRepository> _blogRepositoryMock;
         private readonly IBlogGetService _blogGetService;
         private readonly IFixture _fixture;
-        private readonly IDeleteBlogService _deleteBlogService;
-        private readonly IUpdateBlogService _updateBlogService;
+        private readonly IBlogDeleteService _deleteBlogService;
+        private readonly IBlogUpdateService _updateBlogService;
 
         public BlogServiceTests()
         {
@@ -242,10 +242,9 @@ namespace PersonalBloggingPlatform.ServiceTests
         public async Task UpdateBlog_NullId()
         {
             //Arrange
-            UpdateBlogRequest blog = _fixture.Create<UpdateBlogRequest>();
-
+            UpdateBlogRequest updateBlogRequest = _fixture.Build<UpdateBlogRequest>().Without(x => x.Id).Create();
             //Act
-            Func<Task> action = async () => await _updateBlogService.UpdateBlogById(blog);
+            Func<Task> action = async () => await _updateBlogService.UpdateBlogById(updateBlogRequest);
 
             //Assert
             await action.Should().ThrowAsync<ArgumentNullException>(); // Expecting ArgumentNullException

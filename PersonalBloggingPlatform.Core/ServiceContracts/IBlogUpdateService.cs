@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBloggingPlatform.Core.ServiceContracts
 {
-    public interface IUpdateBlogService
+    public interface IBlogUpdateService
     {
 
         public Task<BlogResponse?> UpdateBlogById(UpdateBlogRequest? updateBlogRequest);
