@@ -30,5 +30,8 @@ namespace PersonalBloggingPlatform.Core.Domain.RepositoryContracts
         public Task<List<Blog>> GetAllBlogs();
 
         public Task<bool> DeleteBlog(Guid? blogID);
+
+        public Task<Blog?> UpdateBlogById(Blog blog);
+
     }
 }
