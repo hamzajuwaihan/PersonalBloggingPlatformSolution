@@ -11,11 +11,15 @@ namespace PersonalBloggingPlatform.Web.Controllers
     {
         private readonly IBlogAddService _blogAddService;
         private readonly IBlogGetService _blogGetService;
+        private readonly IBlogDeleteService _deleteBlogService;
+        private readonly IBlogUpdateService _updateBlogService;
 
-        public BlogsController(IBlogAddService blogAddService, IBlogGetService blogGetService)
+        public BlogsController(IBlogAddService blogAddService, IBlogGetService blogGetService, IBlogDeleteService deleteBlogService, IBlogUpdateService updateBlogService)
         {
             _blogAddService = blogAddService;
             _blogGetService = blogGetService;
+            _deleteBlogService = deleteBlogService;
+            _updateBlogService = updateBlogService;
         }
         /// <summary>
         /// Adds a blog to the database.
@@ -75,5 +79,61 @@ namespace PersonalBloggingPlatform.Web.Controllers
 
             return result;
         }
+
+        /// <summary>
+        /// To delete a blog based on ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Boolean value</returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> DeleteBlogById(Guid id)
+        {
+            if(id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var result = await _deleteBlogService.DeleteBlog(id);
+
+            if(result)
+            {
+                return Ok(result);
+            }
+
+            return NotFound();
+        }
+
+        /// <summary>
+        /// Update blog based on ID.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="blogToBeUpdated"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BlogResponse>> UpdateBlogById(Guid Id, [FromBody] UpdateBlogRequest blogToBeUpdated)
+        {
+
+            if(Id == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var blog = await _blogGetService.GetBlogById(Id);
+
+            if(blog == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _updateBlogService.UpdateBlogById(blogToBeUpdated);
+
+            if(result == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return Ok(result);
+        }
+
     }
 }

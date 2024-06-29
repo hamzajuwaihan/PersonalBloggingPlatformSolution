@@ -24,5 +24,20 @@
             <param name="id">Blog Id</param>
             <returns>Blog or not found</returns>
         </member>
+        <member name="M:PersonalBloggingPlatform.Web.Controllers.BlogsController.DeleteBlogById(System.Guid)">
+            <summary>
+            To delete a blog based on ID.
+            </summary>
+            <param name="id"></param>
+            <returns>Boolean value</returns>
+        </member>
+        <member name="M:PersonalBloggingPlatform.Web.Controllers.BlogsController.UpdateBlogById(System.Guid,PersonalBloggingPlatform.Core.DTO.UpdateBlogRequest)">
+            <summary>
+            Update blog based on ID.
+            </summary>
+            <param name="Id"></param>
+            <param name="blogToBeUpdated"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

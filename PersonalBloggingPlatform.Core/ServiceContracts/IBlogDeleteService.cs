@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBloggingPlatform.Core.ServiceContracts
 {
-    public interface IDeleteBlogService
+    public interface IBlogDeleteService
     {
 
         public Task<bool> DeleteBlog(Guid? blogID);
